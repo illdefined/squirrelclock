@@ -8,7 +8,7 @@ static void clearscreen(){
 
 int main(int argc, char* argv[]){
 
-  char *frame01 =                            
+  char const *frame01 =
   "                             O)           \n"
   "                            ( ))_         \n"
   "                           /     \\       \n"
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
   "                  \\___ ___ _/            \n"
   "                       `   `              \n";
 
-  char *frame02 =                              
+  char const *frame02 =
   "                             0)           \n"
   "    ________                ( ))_         \n"
   "   /        \\              /      \\     \n"
