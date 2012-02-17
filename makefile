@@ -3,6 +3,7 @@ CFLAGS   ?= -pipe -O2
 PREFIX   ?= usr/local
 
 CPPFLAGS += -std=c99
+LDFLAGS  += -lev
 
 squirrelclock: squirrelclock.c
 
