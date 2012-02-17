@@ -18,6 +18,7 @@ static void displayFrame(char const *restrict format) {
 	char now[9];
 	timeString(now, sizeof now);
 	printf(format, "\033[H\033[2J", now);
+	fflush(stdout);
 }
 
 static void displayFrameA(struct ev_loop *loop, ev_timer *watcher, int events) {
