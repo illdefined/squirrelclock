@@ -44,7 +44,7 @@ int main(int argc, char* argv[]){
 
   for(;;){
     curtime = time((time_t *) 0);
-    strftime(now, 9, "%T", localtime(&curtime));
+    strftime(now, sizeof now, "%T", localtime(&curtime));
 
     if( mode == 1 ){
       clearscreen();
