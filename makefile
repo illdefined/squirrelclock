@@ -2,6 +2,8 @@ CPPFLAGS ?= -Wall
 CFLAGS   ?= -pipe -O2
 PREFIX   ?= usr/local
 
+CPPFLAGS += -std=c99
+
 squirrelclock: squirrelclock.c
 
 %: %.c
