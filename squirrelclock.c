@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+#include <unistd.h>
 
 void clearscreen(){
   fputs("\033[H\033[2J", stdout);
