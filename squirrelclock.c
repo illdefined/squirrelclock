@@ -80,6 +80,7 @@ static void die(char const *restrict format, ...) {
 
 static void onExit() {
 	tcsetattr(0, TCSANOW, &pristine);
+	tcflush(0, TCIFLUSH);
 }
 
 int main(int argc, char *argv[]){
