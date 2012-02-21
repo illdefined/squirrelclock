@@ -27,8 +27,8 @@ static void displayFrame(char const *restrict format) {
 	fflush(stdout);
 }
 
-static void displayFrameA(struct ev_loop *loop, ev_timer *watcher, int events) {
-	displayFrame(
+static void timerEvent(struct ev_loop *loop, struct ev_timer *watcher, int events) {
+	displayFrame(ev_userdata(loop) ?
 		"%s                             O)           \n"
 		"                            ( ))_         \n"
 		"                           /     \\       \n"
@@ -41,12 +41,7 @@ static void displayFrameA(struct ev_loop *loop, ev_timer *watcher, int events) {
 		"           \\       \\V/       /          \n"
 		"            \\_____           |           \n"
 		"                  \\___ ___ _/            \n"
-		"                       `   `              \n"
-	);
-}
-
-static void displayFrameB(struct ev_loop *loop, ev_timer *watcher, int events) {
-	displayFrame(
+		"                       `   `              \n" :
 		"%s                             0)           \n"
 		"    ________                ( ))_         \n"
 		"   /        \\              /      \\     \n"
@@ -59,11 +54,12 @@ static void displayFrameB(struct ev_loop *loop, ev_timer *watcher, int events) {
 		"           \\       \\V/       /          \n"
 		"            \\_____           |           \n"
 		"                  \\___ ___ _/            \n"
-		"                       `   `              \n"
-	);
+		"                       `   `              \n");
+
+	ev_set_userdata(loop, (void *) (ev_userdata(loop) ? 0 : 1));
 }
 
-static void stdinEvent(struct ev_loop *loop, ev_timer *watcher, int events) {
+static void stdinEvent(struct ev_loop *loop, struct ev_timer *watcher, int events) {
 	ev_break(loop, EVBREAK_ALL);
 }
 
@@ -88,13 +84,9 @@ int main(int argc, char *argv[]){
 	if (unlikely(!loop))
 		die("Failed to initialise default event loop");
 
-	struct ev_timer frameAWatcher;
-	ev_timer_init(&frameAWatcher, displayFrameA, 0.0, 2.0);
-	ev_timer_start(loop, &frameAWatcher);
-
-	struct ev_timer frameBWatcher;
-	ev_timer_init(&frameBWatcher, displayFrameB, 1.0, 2.0);
-	ev_timer_start(loop, &frameBWatcher);
+	struct ev_timer timerWatcher;
+	ev_timer_init(&timerWatcher, timerEvent, 0.0, 1.0);
+	ev_timer_start(loop, &timerWatcher);
 
 	struct ev_io stdinWatcher;
 	ev_io_init(&stdinWatcher, stdinEvent, 0, EV_READ);
